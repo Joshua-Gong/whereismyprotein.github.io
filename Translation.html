@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNA/RNA to Amino Acid Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            font-size: 14px;
+            padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+</head>
+<body>
+    <h1>DNA/RNA to Amino Acid Translator</h1>
+    <form>
+    <textarea name="textBox" id="sequence" placeholder="Enter DNA or RNA sequence"></textarea>
+    </form>
+    <button id = "button">Translate</button>
+    <div id="result"></div>
+
+
+    <script>
+        var button = document.getElementById("button");
+        button.addEventListener("click", translate);
+        var resultDiv = document.getElementById("result");
+        var userInput = document.getElementById("sequence");
+        
+        function stringRNA(sequence)
+        {
+            var RNASequence = "";
+            for (var i = 0; i < sequence.length; i++)
+            { 
+                if(sequence.charAt(i) == "T")
+                {
+                    RNASequence +="U";
+                }
+                else if(sequence.charAt(i) == "C"||sequence.charAt(i) == "G"||sequence.charAt(i) == "A"||sequence.charAt(i) == "U")
+                {
+                    RNASequence += sequence.charAt(i);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return RNASequence;
+        }
+        
+        function checkValidity(string)
+        {
+            var result = true;
+            if(string.length == 0)
+            {
+                return !result;
+            }
+            for(var i = 0 ; i < string.length ; i++)
+            {
+                if(string.charAt(i)==='A'||string.charAt(i)==='C'||string.charAt(i)==='G'||string.charAt(i)==='U')
+                {
+                    result = result;
+                }
+                else
+                {
+                    result = !result;
+                    return result;
+                }
+                return result;
+            }
+        }
+        
+        function translate() 
+        {
+            var initialSequence = (userInput.value).toUpperCase();
+            var RNASequence = stringRNA(initialSequence);
+            var aminoAcidSequence = '';
+            if(checkValidity(RNASequence))
+            {
+                for(var i = 0; i < RNASequence.length; i += 3) 
+                {
+                    var codon = RNASequence.substr(i, 3);
+                    var aminoAcid;
+                    if(codon === 'AUA' || codon === 'AUC' || codon === 'AUU') 
+                    {
+                        aminoAcid = 'I';
+                    } 
+                    else if(codon === 'AUG') 
+                    {
+                        aminoAcid = 'M';
+                    } 
+                    else if(codon === 'ACA' || codon === 'ACC' || codon === 'ACG' || codon === 'ACU') 
+                    {
+                        aminoAcid = 'T';
+                    } 
+                    else if(codon === 'AAC' || codon === 'AAU') 
+                    {
+                        aminoAcid = 'N';
+                    } 
+                    else if(codon === 'AAA' || codon === 'AAG') 
+                    {
+                        aminoAcid = 'K';
+                    } 
+                    else if(codon === 'AGC' || codon === 'AGU') 
+                    {
+                        aminoAcid = 'S';
+                    } 
+                    else if (codon==='AGA' || codon==='AGG') 
+                    {
+                        aminoAcid = 'R';
+                    } 
+                    else if(codon==='CUA' || codon==='CUC' || codon==='CUG' || codon==='CUU') 
+                    {
+                        aminoAcid = 'L';
+                    } 
+                    else if(codon==='CCA' || codon==='CCC' || codon==='CCG' || codon==='CCU') 
+                    {
+                        aminoAcid = 'P';
+                    } 
+                    else if(codon==='CAC' || codon==='CAU') 
+                    {
+                        aminoAcid = 'H';
+                    } 
+                    else if(codon==='CAA' || codon==='CAG') 
+                    {
+                        aminoAcid = 'Q';
+                    } 
+                    else if(codon==='CGA' || codon==='CGC' || codon==='CGG' || codon==='CGU') 
+                    {
+                        aminoAcid = 'R';
+                    } 
+                    else if(codon==='GUA' || codon==='GUC' || codon==='GUG' || codon==='GUU') 
+                    {
+                        aminoAcid = 'V';
+                    } 
+                    else if(codon==='GCA' || codon==='GCC' || codon==='GCG' || codon==='GCU') 
+                    {
+                        aminoAcid = 'A';
+                    } 
+                    else if(codon==='GAC' || codon==='GAU') 
+                    {
+                        aminoAcid = 'D';
+                    } 
+                    else if(codon==='GAA' || codon==='GAG') 
+                    {
+                        aminoAcid = 'E';
+                    } 
+                    else if(codon==='GGA' || codon==='GGC' || codon==='GGG' || codon==='GGU') 
+                    {
+                        aminoAcid = 'G';
+                    } 
+                    else if(codon==='UCA' || codon==='UCC' || codon==='UCG' || codon==='UCU') 
+                    {
+                        aminoAcid = 'S';
+                    } 
+                    else if(codon==='UUC' || codon==='UUU') 
+                    {
+                        aminoAcid = 'F';
+                    } 
+                    else if(codon==='UUA' || codon==='UUG') 
+                    {
+                        aminoAcid = 'L';
+                    } 
+                    else if(codon==='UAC' || codon==='UAU') 
+                    {
+                        aminoAcid = 'Y';
+                    } 
+                    else if(codon==='UAA' || codon==='UAG' || codon==='UGA') 
+                    {
+                        aminoAcid = '*';
+                    } 
+                    else if(codon==='UGC' || codon==='UGU') 
+                    {
+                        aminoAcid = 'C';
+                    } 
+                    else if(codon==='UGG') 
+                    {
+                        aminoAcid = 'W';
+                    } 
+                    aminoAcidSequence += aminoAcid;
+                }
+                resultDiv.innerHTML = "Amino acid sequence: " + aminoAcidSequence; 
+            }
+            else
+            {
+                resultDiv.innerHTML = "Please type in a valid RNA/DNA sequence"
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>
